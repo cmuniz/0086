@@ -39,7 +39,7 @@ public class Responder
 
     public void respuestasPersonalizadas(){
         respuestasPersonalizadas.put("windows", "Se trata de bug de windows, actualice su software");
-        respuestasPersonalizadas.put("linux", "reconfigure el protocolo TCP/IP");
+        respuestasPersonalizadas.put("linux", "reconfigure el protocolo TCP/IP");        
         respuestasPersonalizadas.put ("internet", "se trata de un problema de su distribuidor de internet");
     }
 
