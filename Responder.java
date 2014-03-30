@@ -40,7 +40,13 @@ public class Responder
     public void respuestasPersonalizadas(){
         respuestasPersonalizadas.put("windows", "Se trata de bug de windows, actualice su software");
         respuestasPersonalizadas.put("linux", "reconfigure el protocolo TCP/IP");        
-        respuestasPersonalizadas.put ("internet", "se trata de un problema de su distribuidor de internet");
+        respuestasPersonalizadas.put("internet", "se trata de un problema de su distribuidor de internet");
+        respuestasPersonalizadas.put("linux crash", "linux crash");
+        respuestasPersonalizadas.put("linux problem", "linux problem");
+        respuestasPersonalizadas.put("linux crash problem", "linux crash problem");
+        respuestasPersonalizadas.put("free", "free");
+        respuestasPersonalizadas.put("app", "app");
+        respuestasPersonalizadas.put("free app", "free app");
     }
 
     /**
@@ -74,12 +80,30 @@ public class Responder
 
     public String generarRespuesta(HashSet<String> input){
         String respuesta = null;
-        Iterator<String> it = input.iterator();
+        String key = null;
+        if(input.contains("linux")){
+            key = "linux";
+            if(input.contains("crash")){
+                key += " crash";
+            }
 
-        while(it.hasNext() && respuesta == null){
-            //             respuesta = respuestasPersonalizadas.get(it.next());
-            respuesta = generatePersonalResponse(it.next());            
-        }  
+            if(input.contains("problem")){
+                key += " problem";
+            }
+            respuesta = generatePersonalResponse(key);
+        }
+        else if(input.contains("free") && input.contains("app")){
+            key = "free app";
+            respuesta = generatePersonalResponse(key);
+        }
+        else{
+            Iterator<String> it = input.iterator();
+            while(it.hasNext() && respuesta == null){
+                //             respuesta = respuestasPersonalizadas.get(it.next());
+                respuesta = generatePersonalResponse(it.next());            
+            }  
+        } 
+
 
         if(respuesta == null){   
             respuesta = generateResponseDefault();
