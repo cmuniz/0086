@@ -49,7 +49,14 @@ public class Responder
      */
     public String generateResponseDefault()
     {
-        return respuestas.get(aleatorio.nextInt(5));
+        String respuesta;
+        if(respuestas.size() > 0){
+            respuesta = respuestas.remove(aleatorio.nextInt(respuestas.size()));
+        }
+        else{
+            respuesta = "Lo siento, no he entendido la pregunta";
+        }
+        return respuesta;
     }
 
     public String generatePersonalResponse(String index){
