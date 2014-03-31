@@ -16,7 +16,7 @@ public class Responder
 
     private Random aleatorio;
     private ArrayList<String> respuestas;
-    private HashMap<String, String> respuestasPersonalizadas;
+    private HashMap<HashSet<String>, String> respuestasPersonalizadas;
     /**
      * Construct a Responder - nothing to do
      */
@@ -38,15 +38,39 @@ public class Responder
     }
 
     public void respuestasPersonalizadas(){
-        respuestasPersonalizadas.put("windows", "Se trata de bug de windows, actualice su software");
-        respuestasPersonalizadas.put("linux", "reconfigure el protocolo TCP/IP");        
-        respuestasPersonalizadas.put("internet", "se trata de un problema de su distribuidor de internet");
-        respuestasPersonalizadas.put("linux crash", "linux crash");
-        respuestasPersonalizadas.put("linux problem", "linux problem");
-        respuestasPersonalizadas.put("linux crash problem", "linux crash problem");
-        respuestasPersonalizadas.put("free", "free");
-        respuestasPersonalizadas.put("app", "app");
-        respuestasPersonalizadas.put("free app", "free app");
+
+        HashSet<String> set = new HashSet<>();
+        set.add("windows");
+        respuestasPersonalizadas.put(set, "Se trata de bug de windows, actualice su software");
+        set = new HashSet<>();
+        set.add("linux");
+        respuestasPersonalizadas.put(set, "reconfigure el protocolo TCP/IP");   
+        set = new HashSet<>();  
+        set.add("internet");
+        respuestasPersonalizadas.put(set, "se trata de un problema de su distribuidor de internet");
+        set = new HashSet<>();
+        set.add("linux");
+        set.add("crash");
+        respuestasPersonalizadas.put(set, "linux crash");
+        set = new HashSet<>();
+        set.add("linux");
+        set.add("problem");
+        respuestasPersonalizadas.put(set, "linux problem");
+        set = new HashSet<>();
+        set.add("linux");
+        set.add("crash");
+        set.add("problem");
+        respuestasPersonalizadas.put(set, "linux crash problem");
+        set = new HashSet<>();
+        set.add("free");
+        respuestasPersonalizadas.put(set, "free");
+        set = new HashSet<>();
+        set.add("app");
+        respuestasPersonalizadas.put(set, "app");
+        set = new HashSet<>();
+        set.add("free");
+        set.add("app");
+        respuestasPersonalizadas.put(set, "free app");
     }
 
     /**
@@ -65,7 +89,7 @@ public class Responder
         return respuesta;
     }
 
-    public String generatePersonalResponse(String index){
+    public String generatePersonalResponse(HashSet<String> index){
         return respuestasPersonalizadas.get(index);
     }
 
@@ -80,30 +104,8 @@ public class Responder
 
     public String generarRespuesta(HashSet<String> input){
         String respuesta = null;
-        String key = null;
-        if(input.contains("linux")){
-            key = "linux";
-            if(input.contains("crash")){
-                key += " crash";
-            }
 
-            if(input.contains("problem")){
-                key += " problem";
-            }
-            respuesta = generatePersonalResponse(key);
-        }
-        else if(input.contains("free") && input.contains("app")){
-            key = "free app";
-            respuesta = generatePersonalResponse(key);
-        }
-        else{
-            Iterator<String> it = input.iterator();
-            while(it.hasNext() && respuesta == null){
-                //             respuesta = respuestasPersonalizadas.get(it.next());
-                respuesta = generatePersonalResponse(it.next());            
-            }  
-        } 
-
+        respuesta = generatePersonalResponse(input);            
 
         if(respuesta == null){   
             respuesta = generateResponseDefault();
